@@ -10,7 +10,7 @@ namespace Constants
     const std::string RUNNABLE = "runnable-";
     const std::string CPP = ".cpp";
 
-    const std::string CXX = "g++ -std=c++17 ";
+    const std::string CXX = "g++ -std=c++17 -fpermissive ";
     const std::string OBJECT_FLAG = " -o ";
     const std::string FIND_OBJECTS = " $(find src -type f -name \"*.o\") ";
 

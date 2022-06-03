@@ -13,7 +13,6 @@ using CommandMap = std::map<std::string, std::function<void()>>;
 
 namespace command_facade
 {
-    extern Assert *assert;
     extern CommandMap commands;
 
     std::function<void()> parse(string const &command);

@@ -2,7 +2,6 @@
 
 namespace command_facade
 {
-    Assert *assert = Assert::get_instance();
     CommandMap commands = {
         { "self_test", []() -> void { self_test(); } },
         { "test",      []() -> void { test(); } }
@@ -39,7 +38,7 @@ namespace command_facade
         runner->process(tests);
         runner->run(tests);
 
-        assert->show_statistics();
+        assert::show_statistics();
     }
 
     void test()
@@ -52,6 +51,6 @@ namespace command_facade
         runner->process(tests);
         runner->run(tests);
 
-        assert->show_statistics();
+        assert::show_statistics();
     }
 }

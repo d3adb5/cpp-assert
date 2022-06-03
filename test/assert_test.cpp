@@ -3,42 +3,41 @@
 
 void run()
 {
-    Assert *assertion = Assert::get_instance();
+    std::cout << assert::get_test_name();
+    assert::assert_equals(0, assert::get_assertions());
+    assert::assert_equals(0, assert::get_test_count());
+    assert::assert_equals(0, assert::get_failures());
+    assert::assert_equals("", assert::get_test_name());
 
-    assertion->assert_equals(0, assertion->get_assertions());
-    assertion->assert_equals(0, assertion->get_test_count());
-    assertion->assert_equals(0, assertion->get_failures());
-    assertion->assert_equals("", assertion->get_test_name());
+    assert::testing("A very simple test");
+    assert::assert_equals(1, 1);
+    assert::assert_equals(1, 3);
 
-    assertion->testing("A very simple test");
-    assertion->assert_equals(1, 1);
-    assertion->assert_equals(1, 3);
+    assert::testing("Another very simple test");
+    assert::assert_equals(1, 2);
+    assert::assert_equals(2, 2);
+    assert::assert_equals(4, 2);
 
-    assertion->testing("Another very simple test");
-    assertion->assert_equals(1, 2);
-    assertion->assert_equals(2, 2);
-    assertion->assert_equals(4, 2);
+    assert::testing("Testing the equality of strings");
+    assert::assert_equals("foo", "foo");
+    assert::assert_equals("foo", "bar");
+    assert::assert_equals("bar", "bar");
 
-    assertion->testing("Testing the equality of strings");
-    assertion->assert_equals("foo", "foo");
-    assertion->assert_equals("foo", "bar");
-    assertion->assert_equals("bar", "bar");
+    assert::testing("Testing the equality of booleans");
+    assert::assert_equals(false, false);
+    assert::assert_equals(true, true);
+    assert::assert_equals(false, true);
 
-    assertion->testing("Testing the equality of booleans");
-    assertion->assert_equals(false, false);
-    assertion->assert_equals(true, true);
-    assertion->assert_equals(false, true);
+    assert::testing("Testing the equality of double");
+    assert::assert_equals(2.0, 2.0);
+    assert::assert_equals(1.0, 2.0);
+    assert::assert_equals(3.0, 3.00);
 
-    assertion->testing("Testing the equality of double");
-    assertion->assert_equals(2.0, 2.0);
-    assertion->assert_equals(1.0, 2.0);
-    assertion->assert_equals(3.0, 3.00);
-
-    assertion->testing("Testing the membership in [1, 2, 3]");
+    assert::testing("Testing the membership in [1, 2, 3]");
 
     std::vector<int> numbers = {1, 2, 3};
-    assertion->assert_contains(numbers, 1);
-    assertion->assert_contains(numbers, 2);
-    assertion->assert_contains(numbers, 3);
-    assertion->assert_contains(numbers, 0);
+    assert::assert_contains(numbers, 1);
+    assert::assert_contains(numbers, 2);
+    assert::assert_contains(numbers, 3);
+    assert::assert_contains(numbers, 0);
 }

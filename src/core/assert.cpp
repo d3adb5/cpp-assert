@@ -1,67 +1,60 @@
 #include "../../include/core/assert.hpp"
 
-Assert *Assert::instance{nullptr};
-std::mutex Assert::mutex;
-
-Assert::Assert()
+namespace assert
 {
-    this->assertions = 0;
-    this->test_count = 0;
-    this->failures = 0;
-    this->test_name = "";
-}
+    namespace
+    {
+        std::string suite_name = "";
+        long assertions = 0;
+        long test_count = 0;
+        long failures = 0;
+    }
 
-Assert::~Assert() {}
+    std::string get_test_name()
+    {
+        return suite_name;
+    }
 
-Assert *Assert::get_instance()
-{
-    std::lock_guard<std::mutex> lock(Assert::mutex);
-    if (Assert::instance == nullptr)
-        instance = new Assert();
+    long get_assertions()
+    {
+        return assertions;
+    }
 
-    return instance;
-}
+    long get_test_count()
+    {
+        return test_count;
+    }
 
-void Assert::show_statistics()
-{
-    std::cout << Constants::BOLDWHITE;
-    std::cout << "Ran "
-              << this->test_count
-              << " tests and "
-              << this->assertions
-              << " assertions."
-              << std::endl;
-    std::cout << this->failures << " failures." << std::endl;
-    std::cout << Constants::RESET;
-}
+    long get_failures()
+    {
+        return failures;
+    }
 
-void Assert::testing(const std::string test_name)
-{
-    std::cout << Constants::BOLDGREEN << std::endl;
-    std::cout << "TESTING ";
-    std::cout << "\"" << test_name << "\"\n"
-              << std::endl;
+    void set_assertions(long new_value) { assertions = new_value; }
+    void set_test_count(long new_value) { test_count = new_value; }
+    void set_failures(long new_value) { failures = new_value; }
 
-    this->test_name = test_name;
-    this->test_count++;
-}
+    void show_statistics()
+    {
+        std::cout << Constants::BOLDWHITE;
+        std::cout << "Ran "
+                  << test_count
+                  << " tests and "
+                  << assertions
+                  << " assertions."
+                  << std::endl;
+        std::cout << failures << " failures." << std::endl;
+        std::cout << Constants::RESET;
+    }
 
-std::string Assert::get_test_name()
-{
-    return this->test_name;
-}
+    void testing(const std::string test_name)
+    {
+        std::cout << Constants::BOLDGREEN << std::endl;
+        std::cout << "TESTING ";
+        std::cout << "\"" << test_name << "\"\n"
+                  << std::endl;
 
-long Assert::get_assertions()
-{
-    return this->assertions;
-}
-
-long Assert::get_test_count()
-{
-    return this->test_count;
-}
-
-long Assert::get_failures()
-{
-    return this->failures;
+        suite_name = test_name;
+        test_count++;
+    }
 }
